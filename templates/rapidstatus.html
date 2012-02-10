@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{% gridMapDetails.title %}</title>
+    <title>{% gridMapDetails["title"] %}</title>
     <link rel="stylesheet" href="leaflet.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
     <script type="text/javascript" src="leaflet.js"></script>
@@ -31,27 +31,27 @@ var activeMap = 'wind';
 var activeGrid = [ ];
 var gridRowHeight, gridColumnWidth, gridN, gridW, gridE, gridS, gridColumns, gridRows;
 // 26 numbers matching first occurences from column A to column Z
-var firstSquares = [{% gridMapDetails.firstSquares %}];
-var lastSquares = [{% gridMapDetails.lastSquares %}];
+var firstSquares = [{% gridMapDetails["firstSquares"] %}];
+var lastSquares = [{% gridMapDetails["lastSquares"] %}];
 
 function init(){
   /* create a tile layer */
-  var cloudmadeUrl = '{% gridMapDetails.tilexyz %}';
-  cloudmadeAttribution = '{% gridMapDetails.tilecopyright %}',
+  var cloudmadeUrl = '{% gridMapDetails["tilexyz"] %}';
+  cloudmadeAttribution = '{% gridMapDetails["tilecopyright"] %}',
   cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttribution});
 
   /* initialize the map div and center it */
   map = new L.Map('map');
-  cityll = new L.LatLng({% gridMapDetails.lat %}, {% gridMapDetails.lng %});
-  map.setView(cityll, {% gridMapDetails.zoom %}).addLayer(cloudmade);
+  cityll = new L.LatLng({% gridMapDetails["lat"] %}, {% gridMapDetails["lng"] %});
+  map.setView(cityll, {% gridMapDetails["zoom"] %}).addLayer(cloudmade);
 
   /* configure the grid */
-  gridN = {% gridMapDetails.north %};
-  gridS = {% gridMapDetails.south %};
-  gridE = {% gridMapDetails.east %};
-  gridW = {% gridMapDetails.west %};
-  gridColumns = {% gridMapDetails.columns %};
-  gridRows = {% gridMapDetails.rows %};
+  gridN = {% gridMapDetails["north"] %};
+  gridS = {% gridMapDetails["south"] %};
+  gridE = {% gridMapDetails["east"] %};
+  gridW = {% gridMapDetails["west"] %};
+  gridColumns = {% gridMapDetails["columns"] %};
+  gridRows = {% gridMapDetails["rows"] %};
 
   /* prepare to draw and store grid data */
   gridRowHeight = (gridN - gridS) / gridRows;
@@ -117,7 +117,7 @@ function bindGrid(gridSquare, i, j){
 }
 /* custom function to set your grid square's name */
 function squareName(i, j){
-{% gridMapDetails.squareNameFunction %}
+{% gridMapDetails["squareNameFunction"] %}
 }
 /* use this function if you want a marker to show its popup on mouseover */
 function activate(m){
@@ -301,7 +301,7 @@ html, body {
         <div class="clear"></div>
           <div id="branding">
             <div style="width:100%;">
-              <img src="{% gridMapDetails.mapUserPic %}" style="margin-left:30%;margin-right:30%;width:40%;"/>
+              <img src="{% gridMapDetails["mapUserPic"] %}" style="margin-left:30%;margin-right:30%;width:40%;"/>
             </div>
           </div><!-- /#branding -->
 
@@ -310,7 +310,7 @@ html, body {
           <!-- Map user and layer info -->
           <div id="explain" style="padding:10px;">
             <!-- <h3>Sample</h3> -->
-            <i>{% gridMapDetails.mapUserName %}</i>
+            <i>{% gridMapDetails["mapUserName"] %}</i>
             <br/>
             <div style="padding:5px">
 
