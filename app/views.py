@@ -31,7 +31,10 @@ def home():
     squareNameFunction = "var letter = String.fromCharCode(65+i);j++;return letter + j;"
     mapUserPic = "http://i.imgur.com/dpHCi.png"
     mapUserName = "Emergency Management Association"
-    return render_template('rapidstatus.html')
+    try:
+      return render_template('rapidstatus.html')
+    except:
+      return render_template('home.html')
 
 @views.after_request
 def add_header(response):
