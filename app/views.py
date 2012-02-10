@@ -20,23 +20,20 @@ def home():
       "lastSquares" : "8,11,11,13,13,13,13,13,14,14,15,15,15,15,16,16,16,16,16,16,13,12,11,11,10,9",
       "tilexyz" : "http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg",
       "tilecopyright" : "Map data &copy; 2012 OpenStreetMap contributors, Tiles by Andy Allan",
-      "lat" : 32.815,
-      "lng" : -83.6324022,
-      "zoom" : 11,
-      "north" : 32.968729,
-      "south" : 32.661449,
-      "east" : -83.48285,
-      "west" : -83.9062,
-      "columns" : 26,
-      "rows" : 16,
+      "lat" : "32.815",
+      "lng" : "-83.6324022",
+      "zoom" : "11",
+      "north" : "32.968729",
+      "south" : "32.661449",
+      "east" : "-83.48285",
+      "west" : "-83.9062",
+      "columns" : "26",
+      "rows" : "16",
       "squareNameFunction" : "var letter = String.fromCharCode(65+i);j++;return letter + j;",
       "mapUserPic" : "http://i.imgur.com/dpHCi.png",
       "mapUserName" : "Emergency Management Association"
     }
-    try:
-      return render_template('rapidstatus.html', gridMapDetails)
-    except:
-      return render_template('home.html')
+    return render_template('rapidstatus.html', gridMapDetails)
 
 @views.after_request
 def add_header(response):
