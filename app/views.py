@@ -14,23 +14,24 @@ views = Blueprint('views', __name__, static_folder='../static',
 @views.route('/')
 def home():
     """Render website's home page."""
-    return render_template('home.html')
-
-
-@views.route('/about/')
-def about():
-    """Render the website's about page."""
-    return render_template('about.html')
-
-
-# The functions below should be applicable to all Flask apps.
-
-@views.route('/<file_name>.txt')
-def send_text_file(file_name):
-    """Send your static text file."""
-    file_dot_text = file_name + '.txt'
-    return views.send_static_file(file_dot_text)
-
+    title = "Grid Map"
+    firstSquares = "7,6,6,5,5,4,4,3,3,2,1,1,1,3,4,4,5,5,5,5,5,5,6,7,7,8"
+    lastSquares = "8,11,11,13,13,13,13,13,14,14,15,15,15,15,16,16,16,16,16,16,13,12,11,11,10,9"
+    tilexyz = "http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg"
+    tilecopyright = "Map data &copy; 2012 OpenStreetMap contributors, Tiles by Andy Allan"
+    lat = 32.815
+    lng = -83.6324022
+    zoom = 11
+    north = 32.968729
+    south = 32.661449
+    east = -83.48285
+    west = -83.9062
+    columns = 26
+    rows = 16
+    squareNameFunction = "var letter = String.fromCharCode(65+i);j++;return letter + j;"
+    mapUserPic = "http://i.imgur.com/dpHCi.png"
+    mapUserName = "Emergency Management Association"
+    return render_template('rapidstatus.html')
 
 @views.after_request
 def add_header(response):
