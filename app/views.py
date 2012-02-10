@@ -33,7 +33,7 @@ def home():
       "mapUserPic" : "http://i.imgur.com/dpHCi.png",
       "mapUserName" : "Emergency Management Association"
     }
-    return render_template('rapidstatus.html', gridMapDetails)
+    return render_template('rapidstatus.html', **gridMapDetails)
 
 @views.after_request
 def add_header(response):
