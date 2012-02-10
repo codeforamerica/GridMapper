@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -5,7 +6,7 @@
     <link rel="stylesheet" href="static/css/leaflet.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="static/css/leaflet.ie.css" /><![endif]-->
     <script type="text/javascript" src="static/js/leaflet.js"></script>
-    <link href="static/css/bootstrap.css" rel="stylesheet">
+    {% block css %}
     <script type="text/javascript">
 var map, gridSquares, activeGridLayer, activeMap;
 
