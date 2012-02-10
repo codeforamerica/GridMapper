@@ -2,9 +2,10 @@
 <html>
   <head>
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="leaflet.css" />
-    <!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
-    <script type="text/javascript" src="leaflet.js"></script>
+    <link rel="stylesheet" href="static/css/leaflet.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="static/css/leaflet.ie.css" /><![endif]-->
+    <script type="text/javascript" src="static/js/leaflet.js"></script>
+    <link href="static/css/bootstrap.css" rel="stylesheet">
     <script type="text/javascript">
 var map, gridSquares, activeGridLayer, activeMap;
 
@@ -228,7 +229,6 @@ function $(id){
   return document.getElementById(id);
 }
     </script>
-    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
 html, body {
   height: 100%;
@@ -256,18 +256,6 @@ html, body {
   width: 100%;
   position: relative;
   float: left;
-}
-
-#branding h1 {
-  background: url("http://i.imgur.com/lVfRw.jpg") no-repeat left top;
-  width: 250px;
-  height: 101px;
-}
-
-#branding h1 a {
-  display: block;
-  text-indent: -99em;
-  text-align: center;
 }
 
 /* === Map === */
