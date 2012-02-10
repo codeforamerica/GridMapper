@@ -34,7 +34,7 @@ def home():
       "mapUserName" : "Emergency Management Association"
     }
     try:
-      return render_template('rapidstatus.html', **gridMapDetails)
+      return render_template('rapidstatus.html', gridMapDetails)
     except:
       return render_template('home.html')
 
