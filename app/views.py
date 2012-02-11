@@ -30,7 +30,7 @@ def home():
       "columns" : "26",
       "rows" : "16",
       "squareNameFunction" : "var letter = String.fromCharCode(65+i);j++;return letter + j;",
-      "mapUserPic" : "http://i.imgur.com/dpHCi.png",
+      "mapUserPic" : "/static/images/citylogo.png",
       "mapUserName" : "Emergency Management Association"
     }
     return render_template('rapidstatus.html', **gridMapDetails)
