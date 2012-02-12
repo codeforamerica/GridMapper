@@ -13,53 +13,27 @@ views = Blueprint('views', __name__, static_folder='../static',
 
 @views.route('/')
 def home():
-    # Render website's home page.
-    interviewList = [
-		{
-			"id": "1",
-			"img": "http://i.imgur.com/T0YNxs.jpg",
-			"interviewed": "Sam Pull",
-			"jobtitle": "Clipper",
-			"humandate": "Feb 14, 2012",
-			"whoareyou": '''My name is Sam Pull, and I clip things.''',
-			"hardware": '''<p>Essentially, I am clipping things with scissors.</p>
-			<p>Sometimes other clipper tools are involved. But not clipper ships.</p>''',
-			"software": '''<p>Before I clip anything, I Google it.</p>
-			<p>Sometimes I use RememberTheMilk to keep a list of things to clip.</p>''',
-			"dream": '''<p>I would like to have a massive clip-a-tron, but it would likely put me out of work.</p>'''
-		},
-		{
-			"id": "2",
-			"img": "http://i.imgur.com/T0YNxs.jpg",
-			"interviewed": "Samantha Pull",
-			"jobtitle": "Clipper",
-			"humandate": "Feb 14, 2012",
-			"whoareyou": '''My name is Samantha Pull, and I clip things.''',
-			"hardware": '''<p>Essentially, I am clipping things with scissors.</p>
-			<p>Sometimes other clipper tools are involved. But not clipper ships.</p>''',
-			"software": '''<p>Before I clip anything, I Google it.</p>
-			<p>Sometimes I use RememberTheMilk to keep a list of things to clip.</p>''',
-			"dream": '''<p>I would like to have a massive clip-a-tron, but it would likely put me out of work.</p>'''
-		}
-    ]
-    return render_template('usesthishome.html', **interviewList)
-
-@views.route('/blog/<post>')
-def showInterview(post):
-	interviewDetail = {
-		"id": "1",
-		"img": "http://i.imgur.com/T0YNxs.jpg",
-		"interviewed": "Sam Pull",
-		"jobtitle": "Clipper",
-		"humandate": "Feb 14, 2012",
-		"whoareyou": '''My name is Sam Pull, and I clip things.''',
-		"hardware": '''<p>Essentially, I am clipping things with scissors.</p>
-		<p>Sometimes other clipper tools are involved. But not clipper ships.</p>''',
-		"software": '''<p>Before I clip anything, I Google it.</p>
-		<p>Sometimes I use RememberTheMilk to keep a list of things to clip.</p>''',
-		"dream": '''<p>I would like to have a massive clip-a-tron, but it would likely put me out of work.</p>'''
-	}
-	return render_template('usesthispost.html', **interviewDetail)
+    """Render website's home page."""
+    gridMapDetails = {
+      "title": "Grid Map",
+      "firstSquares" : "7,6,6,5,5,4,4,3,3,2,1,1,1,3,4,4,5,5,5,5,5,5,6,7,7,8",
+      "lastSquares" : "8,11,11,13,13,13,13,13,14,14,15,15,15,15,16,16,16,16,16,16,13,12,11,11,10,9",
+      "tilexyz" : "http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg",
+      "tilecopyright" : "Map data &copy; 2012 OpenStreetMap contributors, Tiles by Mike Migurski of Stamen Design",
+      "lat" : "32.815",
+      "lng" : "-83.6324022",
+      "zoom" : "11",
+      "north" : "32.968729",
+      "south" : "32.661449",
+      "east" : "-83.48285",
+      "west" : "-83.9062",
+      "columns" : "26",
+      "rows" : "16",
+      "squareNameFunction" : "var letter = String.fromCharCode(65+i);j++;return letter + j;",
+      "mapUserPic" : "/static/images/citylogo.png",
+      "mapUserName" : "Emergency Management Association"
+    }
+    return render_template('rapidstatus.html', **gridMapDetails)
 
 @views.after_request
 def add_header(response):
