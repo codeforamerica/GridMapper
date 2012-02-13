@@ -73,7 +73,7 @@ function init(){
           new L.LatLng( gridN - (j+1) * gridRowHeight, gridW + (i+1) * gridColumnWidth ),
           new L.LatLng( gridN - (j+1) * gridRowHeight, gridW + i * gridColumnWidth )
         ];
-        var gridSquare = new L.Polygon(corners, { color:'#000', weight: 3, fill: true, fillColor: '#ddd', fillOpacity: 0.6, opacity: 0.4 });
+        var gridSquare = new L.Polygon(corners, { color:'#000', weight: 3, fill: true, fillColor: statusToColor[gridDataBase[i][j][0]], fillOpacity: 0.6, opacity: 0.4 });
         map.addLayer(gridSquare);
 
         /* store and handle events for this grid square */
