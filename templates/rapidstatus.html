@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/static/css/leaflet.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="/static/css/leaflet.ie.css" /><![endif]-->
     <script type="text/javascript" src="/static/js/leaflet.js"></script>
+    <script type="text/javascript" src="http://mapmeld.appspot.com/gridtest?action=read"></script>
     <link href="/static/css/bootstrap-2.css" rel="stylesheet">
     <script type="text/javascript">
 var map, gridSquares, activeGridLayer, activeMap;
@@ -63,7 +64,7 @@ function init(){
     gridSquares.push( [ ] );
     for(var j=0; j<gridRows; j++){
       /* add every square in the grid - even if not set to be visible */
-      gridSquares[i].push({ wind: 0, flood: 0 });
+      gridSquares[i].push({ wind: gridDataBase[i][j][0], flood: gridDataBase[i][j][1] });
       if((j >= firstSquares[i]-1) && (j<lastSquares[i])){
         /* create and add a grid square */
         var corners = [
@@ -219,6 +220,27 @@ function reportLevel(selecting){
   var gridCenter = new L.LatLng( gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
   popup.setLatLng(gridCenter);
   map.openPopup(popup);
+  
+  /* report to database */
+  var gridString = "gridDataBase = [";
+  for(var col=0; col<gridColumns; col++){
+  	if(col!=0){
+  		gridString+= ",";
+  	}
+    gridString += "[";
+  	for(var row=0; row<gridRows; row++){
+      if(row!=0){
+      	gridString += ',';
+      }
+      gridString += "[0,0]";
+    }
+    gridString += "]";
+  }
+  gridString += '];';
+  var s = document.createElement('script');
+  s.type = "text/javascript";
+  s.src = "http://mapmeld.appspot.com/gridtest?action=set&txt=" + gridString;
+  document.body.appendChild(s);
 }
 
 /* retrieve URL variables */
