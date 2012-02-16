@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/css/leaflet.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="/static/css/leaflet.ie.css" /><![endif]-->
+    <script type="text/javascript" src="/static/js/leaflet.js"></script>
+    <script type="text/javascript" src="http://mapmeld.appspot.com/gridtest?action=read"></script>
+    <link href="/static/css/bootstrap-2.css" rel="stylesheet">
+    <script type="text/javascript">
+var map, gridSquares, activeGridLayer, activeMap;
+
+/* what does each status from 0-4 mean? */
+var statusToText = [
+  "0- No damage",
+  "1- Affected (Minor)",
+  "2- Minor (Moderate)",
+  "3- Major (Severe)",
+  "4- Destroyed (Catastrophic)"
+];
+/* what color should a square from 0-4 be? */
+var statusToColor = [
+  '#ddd',
+  '#0f0',
+  '#ff0',
+  '#ff8c00',
+  '#f00'
+];
+
+/* initial map type */
+var activeMap = 'wind';
+
+var activeGrid = [ ];
+var gridRowHeight, gridColumnWidth, gridN, gridW, gridE, gridS, gridColumns, gridRows;
+// 26 numbers matching first occurences from column A to column Z
+var firstSquares = [{{ firstSquares }}];
+var lastSquares = [{{ lastSquares }}];
+
+function init(){
+  /* create a tile layer */
+  var cloudmadeUrl = '{{ tilexyz }}';
+  cloudmadeAttribution = '{{ tilecopyright }}',
+  cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttribution});
+
+  /* initialize the map div and center it */
+  map = new L.Map('map');
+  cityll = new L.LatLng({{ lat }}, {{ lng }});
+  map.setView(cityll, {{ zoom }}).addLayer(cloudmade);
+
+  /* configure the grid */
+  gridN = {{ north }};
+  gridS = {{ south }};
+  gridE = {{ east }};
+  gridW = {{ west }};
+  gridColumns = {{ columns }};
+  gridRows = {{ rows }};
+
+  /* prepare to draw and store grid data */
+  gridRowHeight = (gridN - gridS) / gridRows;
+  gridColumnWidth = (gridE - gridW) / gridColumns;
+  gridSquares = [ ];
+    
+  for(var i=0; i<gridColumns; i++){
+    gridSquares.push( [ ] );
+    for(var j=0; j<gridRows; j++){
+      /* add every square in the grid - even if not set to be visible */
+      gridSquares[i].push({ wind: gridDataBase[i][j][0], flood: gridDataBase[i][j][1] });
+      if((j >= firstSquares[i]-1) && (j<lastSquares[i])){
+        /* create and add a grid square */
+        var corners = [
+          new L.LatLng( gridN - j * gridRowHeight, gridW + i * gridColumnWidth ),
+          new L.LatLng( gridN - j * gridRowHeight, gridW + (i+1) * gridColumnWidth ),
+          new L.LatLng( gridN - (j+1) * gridRowHeight, gridW + (i+1) * gridColumnWidth ),
+          new L.LatLng( gridN - (j+1) * gridRowHeight, gridW + i * gridColumnWidth )
+        ];
+        var gridSquare = new L.Polygon(corners, { color:'#000', weight: 3, fill: true, fillColor: statusToColor[gridDataBase[i][j][0]], fillOpacity: 0.6, opacity: 0.4 });
+        map.addLayer(gridSquare);
+
+        /* store and handle events for this grid square */
+        bindGrid(gridSquare, i, j);
+        gridSquares[i][j].layer = gridSquare;
+      }
+    }
+  }
+
+  /* set a base icon if you are adding points
+  var baseIcon = L.Icon.extend({
+    iconUrl: 'http://google-maps-icons.googlecode.com/files/hiking-tourism.png',
+    shadowUrl: 'http://google-maps-icons.googlecode.com/files/shadow.png',
+    iconSize: new L.Point(30, 36),
+    shadowSize: new L.Point(42, 30),
+    iconAnchor: new L.Point(15, 18),
+    popupAnchor: new L.Point(0, -12)
+  }); */
+}
+function bindGrid(gridSquare, i, j){
+  gridSquare.on('click', function(e){
+    /* ignore clicks when grid squares are hidden */
+    if(activeMap == 'clear'){
+      return;
+    }
+
+    /* enable grid square data controls */
+    activeGrid = [i, j];
+    activeGridLayer = gridSquare;
+    $("square_name").innerHTML = squareName(i,j);
+    $("wind_level").disabled = false;
+    $("wind_level").value = gridSquares[i][j].wind;
+    $("flood_level").disabled = false;
+    $("flood_level").value = gridSquares[i][j].flood;
+
+    /* show popup in center of grid square */
+    var popup = new L.Popup();
+    popup.setContent("<h3>" + squareName(i,j) + "</h3><span class='label label-info'>Wind</span>" + statusToText[1 * gridSquares[i][j].wind] + "<br/><span class='label label-info'>Flood</span>" + statusToText[1 * gridSquares[i][j].flood]);
+    var gridCenter = new L.LatLng( gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
+    popup.setLatLng(gridCenter);
+    map.openPopup(popup);
+  });
+}
+/* custom function to set your grid square's name */
+function squareName(i, j){
+{{ squareNameFunction }}
+}
+/* use this function if you want a marker to show its popup on mouseover */
+function activate(m){
+  m.on('mouseover', function(e){
+    m.openPopup();
+  });
+}
+
+/* switch map over to show wind data values */
+function loadWindMap(){
+  /* show current layer */
+  $("windButton").className = "btn disabled blueborder";
+  $("floodButton").className = "btn";
+  $("clearButton").className = "btn";
+  activeMap = 'wind';
+
+  /* set each grid square */
+  for(var i=0; i<gridColumns; i++){
+    for(var j=0; j<gridRows; j++){
+      var newLevel = gridSquares[i][j].wind;
+      try{
+        gridSquares[i][j].layer.setStyle({opacity: 0.4, fillColor: statusToColor[newLevel], fillOpacity: 0.6});
+      }
+      catch(e){
+        /* just a non-drawn square */
+      }
+    }
+  }
+}
+function loadFloodMap(){
+  /* show current layer and set controls */
+  $("windButton").className = "btn";
+  $("floodButton").className = "btn disabled blueborder";
+  $("clearButton").className = "btn";
+  activeMap = 'flood';
+
+  /* set each grid square */
+  for(var i=0; i<gridColumns; i++){
+    for(var j=0; j<gridRows; j++){
+      var newLevel = gridSquares[i][j].flood;
+      try{
+        gridSquares[i][j].layer.setStyle({opacity: 0.4, fillColor: statusToColor[newLevel], fillOpacity: 0.6});
+      }
+      catch(e){
+        /* just a non-drawn square */
+      }
+    }
+  }
+}
+/* function hide squares, but does not remove them */
+function clearMap(){
+  /* set layer status */
+  $("windButton").className = "btn";
+  $("floodButton").className = "btn";
+  $("clearButton").className = "btn disabled blueborder";
+  activeMap = 'clear';
+
+  /* hide each square */
+  for(var i=0; i<gridColumns; i++){
+    for(var j=0; j<gridRows; j++){
+      try{
+        gridSquares[i][j].layer.setStyle({opacity: 0, fillOpacity: 0});
+      }
+      catch(e){
+        /* skip squares which are never visible */
+      }
+    }
+  }
+}
+/* respond to user changing status 0-4 */
+function reportLevel(selecting){
+  /* find current grid square and selected value */
+  var i = activeGrid[0];
+  var j = activeGrid[1];
+  var newLevel = 1 * selecting.value;
+
+  /* don't have multiple popups */
+  map.closePopup();
+
+  if(selecting.id == "wind_level"){
+    gridSquares[i][j].wind = newLevel;
+    /* if layer and status update match, change grid square color */
+    if(activeMap == 'wind'){
+      activeGridLayer.setStyle({fillColor: statusToColor[newLevel], fillOpacity: 0.6});
+    }
+  }
+  else if(selecting.id == "flood_level"){
+    gridSquares[i][j].flood = newLevel;
+    /* if layer and status update match, change grid square color */
+    if(activeMap == 'flood'){
+      activeGridLayer.setStyle({fillColor: statusToColor[newLevel], fillOpacity: 0.6});
+    }
+  }
+
+  /* re-open popup with updated value */
+  var popup = new L.Popup();
+  popup.setContent("<h3>" + squareName(i,j) + "</h3><span class='label label-info'>Wind</span>" + statusToText[1 * gridSquares[i][j].wind] + "<br/><span class='label label-info'>Flood</span>" + statusToText[1 * gridSquares[i][j].flood] );
+  var gridCenter = new L.LatLng( gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
+  popup.setLatLng(gridCenter);
+  map.openPopup(popup);
+  
+  /* report to database */
+  var gridString = '[';
+  for(var row=0;row<gridRows;row++){
+    if(row!=0){ gridString += ','; }
+  	gridString += '[' + gridSquares[i][row].wind + ',' + gridSquares[i][row].flood + ']';
+  }
+  var s = document.createElement('script');
+  s.type = "text/javascript";
+  s.src = "http://mapmeld.appspot.com/gridtest?action=set&col=" + i + "&txt=" + gridString;
+  document.body.appendChild(s);
+}
+
+/* retrieve URL variables */
+function gup(nm){nm=nm.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");var rxS="[\\?&]"+nm+"=([^&#]*)";var rx=new RegExp(rxS);var rs=rx.exec(window.location.href);if(!rs){return null;}else{return rs[1];}}
+
+/* helper function */
+function $(id){
+  return document.getElementById(id);
+}
+    </script>
+    <style type="text/css">
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: none;
+  font: 100% arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.clear {
+  clear: both;
+}
+
+/* === Column === */
+
+#column {
+  float: left;
+  width: 20%;
+}
+
+/* === Branding === */
+
+#branding {
+  width: 100%;
+  position: relative;
+  float: left;
+}
+
+/* === Map === */
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+#column {
+  position: absolute;
+  left: 50px;
+  top: 120px;
+  border-radius: 15px;
+  background-color:#fff;
+}
+
+#square_name{
+  font-weight: bold;
+  font-size: 12pt;
+}
+    </style>
+    </head>
+    <body onload="init()">
+    
+      <!-- show the Leaflet.js map here -->
+      <div id="map"></div>
+
+      <div id="column">
+        <div class="clear"></div>
+          <div id="branding">
+            <div style="width:100%;">
+              <img src="{{ mapUserPic }}" style="margin-left:30%;margin-right:30%;width:40%;"/>
+            </div>
+          </div><!-- /#branding -->
+
+          <div class="clear"></div>
+
+          <!-- Map user and layer info -->
+          <div id="explain" style="padding:10px;">
+            <!-- <h3>Sample</h3> -->
+            <i>{{ mapUserName }}</i>
+            <br/>
+            <div style="padding:5px">
+
+            <h2>Switch Map</h2>
+            <!-- map layer selector -->
+            <div class="btn-group">
+              <a id="windButton" class="btn disabled blueborder" href="#" onclick="loadWindMap()">Wind</a>
+              <a id="floodButton" class="btn" href="#" onclick="loadFloodMap()">Flood</a>
+              <a id="clearButton" class="btn" href="#" onclick="clearMap()">Blank</a>
+            </div>
+          </div>
+
+          <!-- square data input section -->
+          <div style="border:1px solid #000;padding:5px;margin-top:25px;">
+            <h2>Update Square</h2>
+            <p>
+              <span class="label label-info">Name</span>
+              <br/>
+              <span id="square_name">None Selected</span>
+            </p>
+            <p>
+  	      <span class="label label-info">Wind</span>
+  	      <br/>
+              <select id="wind_level" disabled="disabled" onchange="reportLevel(this)">
+                <option value="0" selected="selected">0- No damage</option>
+                <option value="1">1- Affected (Minor)</option>
+                <option value="2">2- Minor (Moderate)</option>
+                <option value="3">3- Major (Severe)</option>
+                <option value="4">4- Destroyed (Catastrophic)</option>
+              </select>
+            </p>
+            <p>
+              <span class="label label-info">Flood</span>
+              <br/>
+              <select id="flood_level" disabled="disabled" onchange="reportLevel(this)">
+                <option value="0" selected="selected">0- No damage</option>
+                <option value="1">1- Affected (Minor)</option>
+                <option value="2">2- Minor (Moderate)</option>
+                <option value="3">3- Major (Severe)</option>
+                <option value="4">4- Destroyed (Catastrophic)</option>
+              </select>
+            </p>
+          </div>
+        </div><!-- /#explain -->
+      </div><!-- /#column -->
+
+      <div id="overlay"></div>
+    </body>
+</html>
