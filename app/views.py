@@ -11,7 +11,7 @@ views = Blueprint('views', __name__, static_folder='../static',
                   template_folder='../templates')
 
 @views.route('/full')
-def home():
+def fullscreen():
     # try full-screen map
     gridMapDetails = {
       "title": "Grid Map",
