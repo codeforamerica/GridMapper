@@ -351,6 +351,11 @@ html, body {
   font-weight: bold;
   font-size: 12pt;
 }
+
+span.label{
+  margin-left: 12px;
+  margin-right: 12px;
+}
     </style>
     </head>
     <body onload="init()">
@@ -379,9 +384,9 @@ html, body {
               <a id="clearButton" class="btn" href="#" onclick="clearMap()">Blank</a>
             </div>
             
-            <label><input id="countyLayer" type="checkbox" onclick="toggle(this)" checked="checked"/>County</label>
+            <input id="countyLayer" type="checkbox" onclick="toggle(this)" checked="checked"/><span class="label label-info">County</span>
             <br/>
-            <label><input id="wardLayer" type="checkbox" onclick="toggle(this)" checked="checked"/>Wards</label>
+            <input id="wardLayer" type="checkbox" onclick="toggle(this)" checked="checked"/><span class="label label-info">Wards</span>
 
           </div>
 
