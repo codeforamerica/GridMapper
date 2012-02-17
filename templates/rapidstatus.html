@@ -269,39 +269,23 @@ function reportLevel(selecting){
 /* show and hide county */
 function toggle(chk){
   if(chk.id == "wardLayer"){
-    if(map.hasLayer(wards[0])){
+    if(chk.checked){
       for(var w=0;w<wards.length;w++){
-        map.removeLayer(wards[w]);
+        wards[w].setStyle({ fillOpacity: 0.5 });
       }
     }
     else{
       for(var w=0;w<wards.length;w++){
-        map.addLayer(wards[w]);
-      }
-      if(activeMap == 'flood'){
-        clearMap();
-        loadFloodMap();
-      }
-      else if(activeMap == 'wind'){
-        clearMap();
-        loadWindMap();
+        wards[w].setStyle({ fillOpacity: 0 });
       }
     }
   }
   if(chk.id == "countyLayer"){
-    if(map.hasLayer(county)){
-      map.removeLayer(county);
+    if(chk.checked){
+      county.setStyle({ opacity: 1 });
     }
     else{
-      map.addLayer(county);
-      if(activeMap == 'flood'){
-        clearMap();
-        loadFloodMap();
-      }
-      else if(activeMap == 'wind'){
-        clearMap();
-        loadWindMap();
-      }
+      county.setStyle({ opacity: 0 });
     }
   }
 }
