@@ -369,7 +369,6 @@ html, body {
 }
 
 span.label{
-  margin-left: 12px;
   margin-right: 12px;
 }
     </style>
@@ -399,11 +398,12 @@ span.label{
               <a id="floodButton" class="btn" href="#" onclick="loadFloodMap()">Flood</a>
               <a id="clearButton" class="btn" href="#" onclick="clearMap()">Blank</a>
             </div>
-            
-            <input id="countyLayer" type="checkbox" onclick="toggle(this)" checked="checked"/><span class="label label-info">County</span>
             <br/>
-            <input id="wardLayer" type="checkbox" onclick="toggle(this)" checked="checked"/><span class="label label-info">Wards</span>
-
+            <span class="label label-info">County</span>
+            <input id="countyLayer" type="checkbox" onclick="toggle(this)" checked="checked"/>
+            <br/>
+            <span class="label label-info">Wards</span>
+            <input id="wardLayer" type="checkbox" onclick="toggle(this)" checked="checked"/>
           </div>
 
           <!-- square data input section -->
