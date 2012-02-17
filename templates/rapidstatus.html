@@ -271,18 +271,18 @@ function toggle(chk){
   if(chk.id == "wardLayer"){
     if(chk.checked){
       for(var w=0;w<wards.length;w++){
-        wards[w].setStyle({ fillOpacity: 0.5 });
+        wards[w].setStyle({ fillOpacity: 0.6, opacity: 0.6 });
       }
     }
     else{
       for(var w=0;w<wards.length;w++){
-        wards[w].setStyle({ fillOpacity: 0 });
+        wards[w].setStyle({ fillOpacity: 0, opacity: 0 });
       }
     }
   }
   if(chk.id == "countyLayer"){
     if(chk.checked){
-      county.setStyle({ opacity: 1 });
+      county.setStyle({ opacity: 0.6 });
     }
     else{
       county.setStyle({ opacity: 0 });
