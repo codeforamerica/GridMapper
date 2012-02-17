@@ -286,6 +286,14 @@ function toggle(chk){
     }
     else{
       map.addLayer(county);
+      if(activeMap = 'flood'){
+        clearMap();
+        loadFloodMap();
+      }
+      else if(activeMap == 'wind'){
+        clearMap();
+        loadWindMap();
+      }
     }
   }
 }
