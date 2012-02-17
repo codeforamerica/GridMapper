@@ -278,6 +278,14 @@ function toggle(chk){
       for(var w=0;w<wards.length;w++){
         map.addLayer(wards[w]);
       }
+      if(activeMap == 'flood'){
+        clearMap();
+        loadFloodMap();
+      }
+      else if(activeMap == 'wind'){
+        clearMap();
+        loadWindMap();
+      }
     }
   }
   if(chk.id == "countyLayer"){
