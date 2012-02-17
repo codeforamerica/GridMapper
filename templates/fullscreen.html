@@ -205,7 +205,7 @@ function clearMap(){
     for(var j=0; j<gridRows; j++){
       try{
         //gridSquares[i][j].layer.setStyle({opacity: 0, fillOpacity: 0});
-        map.removeLayer(gridSquares[i][j].layer;
+        map.removeLayer(gridSquares[i][j].layer);
       }
       catch(e){
         /* skip squares which are never visible */
