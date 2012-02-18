@@ -178,7 +178,6 @@ function bindGrid(gridSquare, i, j){
 
     /* enable grid square data controls */
     activeGrid = [i, j];
-    console.log(i + "," + j);
     activeGridLayer = gridSquare;
     $("square_name").innerHTML = squareName(i,j);
     $("wind_level").disabled = false;
@@ -209,9 +208,10 @@ function setSquare(selector){
   if(activeMap == 'clear'){
     return;
   }
-  var i = selector.value.split(",")[0];
-  var j = selector.value.split(",")[1];
+  var i = selector.value.split(",")[0] * 1;
+  var j = selector.value.split(",")[1] * 1;
   gridSquare = gridSquares[i][j];
+  console.log(i + "," + j);
 
   /* enable grid square data controls */
   activeGrid = [i, j];
