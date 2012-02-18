@@ -317,6 +317,7 @@ html, body {
 #column {
   float: left;
   width: 20%;
+  background-color: #f7f7e8;
 }
 
 /* === Branding === */
@@ -355,6 +356,13 @@ html, body {
 span.label{
   margin-right: 12px;
 }
+
+#squareedit{
+  border:1px solid #000;
+  padding:5px;
+  margin-top:25px;
+  background-color: #fff;
+}
     </style>
     </head>
     <body onload="init()">
@@ -389,7 +397,7 @@ span.label{
           </div>
 
           <!-- square data input section -->
-          <div style="border:1px solid #000;padding:5px;margin-top:25px;">
+          <div id="squareedit">
             <h2>Update Square</h2>
             <p>
               <span class="label label-info">Name</span>
@@ -426,7 +434,5 @@ span.label{
       <div id="map-container">
         <div id="map"></div>
       </div><!-- /#map-container -->
-
-      <div id="overlay"></div>
     </body>
 </html>
