@@ -128,6 +128,7 @@ function init(){
 
         /* add squares to a dropdown */
         var sq = document.createElement("option");
+        option.value = i + "," + j;
         option.value = squareName(i,j);
         $("selectSquare").appendChild(sq);
 
@@ -202,7 +203,29 @@ function activate(m){
     m.openPopup();
   });
 }
+function setSquare(selector){
+  if(activeMap == 'clear'){
+    return;
+  }
+  var i = selector.value.split(",")[0]
+  var j = selector.value.split(",")[1];
 
+  /* enable grid square data controls */
+  activeGrid = [i, j];
+  activeGridLayer = gridSquare;
+  $("square_name").innerHTML = squareName(i,j);
+  $("wind_level").disabled = false;
+  $("wind_level").value = gridSquares[i][j].wind;
+  $("flood_level").disabled = false;
+  $("flood_level").value = gridSquares[i][j].flood;
+
+  /* show popup in center of grid square */
+  var popup = new L.Popup();
+  popup.setContent("<h3>" + squareName(i,j) + "</h3><span class='label label-info'>Wind</span>" + statusToText[1 * gridSquares[i][j].wind] + "<br/><span class='label label-info'>Flood</span>" + statusToText[1 * gridSquares[i][j].flood]);
+  var gridCenter = new L.LatLng( gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
+  popup.setLatLng(gridCenter);
+  map.openPopup(popup);
+}
 /* switch map over to show wind data values */
 function loadWindMap(){
   /* show current layer */
