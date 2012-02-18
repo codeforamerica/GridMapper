@@ -125,6 +125,12 @@ function init(){
         if(excludeSquare){
           continue;
         }
+
+        /* add squares to a dropdown */
+        var sq = document.createElement("option");
+        option.value = squareName(i,j);
+        $("selectSquare").appendChild(sq);
+
         /* if this is the first or last in a column, add a column letter marker */
         //if((j == firstSquares[i] - 1) || (j == lastSquares[i] - 1)){
         if(j == firstSquares[i] - 1){
@@ -446,6 +452,8 @@ span.label{
               <span class="label label-info">Name</span>
               <br/>
               <span id="square_name">None Selected</span>
+              <select id="select_square" onchange="setSquare(this)">
+              </select>
             </p>
             <p>
   	      <span class="label label-info">Wind</span>
