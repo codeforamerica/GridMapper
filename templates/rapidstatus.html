@@ -176,6 +176,9 @@ function loadWindMap(){
     for(var j=0; j<gridRows; j++){
       var newLevel = gridSquares[i][j].wind;
       try{
+        if(!map.hasLayer(gridSquares[i][j].layer)){
+          map.addLayer(gridSquares[i][j].layer);
+        }
         gridSquares[i][j].layer.setStyle({opacity: 0.4, fillColor: statusToColor[newLevel], fillOpacity: 0.6});
       }
       catch(e){
@@ -196,6 +199,9 @@ function loadFloodMap(){
     for(var j=0; j<gridRows; j++){
       var newLevel = gridSquares[i][j].flood;
       try{
+        if(!map.hasLayer(gridSquares[i][j].layer)){
+          map.addLayer(gridSquares[i][j].layer);
+        }
         gridSquares[i][j].layer.setStyle({opacity: 0.4, fillColor: statusToColor[newLevel], fillOpacity: 0.6});
       }
       catch(e){
@@ -216,7 +222,8 @@ function clearMap(){
   for(var i=0; i<gridColumns; i++){
     for(var j=0; j<gridRows; j++){
       try{
-        gridSquares[i][j].layer.setStyle({opacity: 0, fillOpacity: 0});
+        //gridSquares[i][j].layer.setStyle({opacity: 0, fillOpacity: 0});
+        map.removeLayer(gridSquares[i][j].layer);
       }
       catch(e){
         /* skip squares which are never visible */
