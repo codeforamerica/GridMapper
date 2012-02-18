@@ -35,6 +35,7 @@ var gridRowHeight, gridColumnWidth, gridN, gridW, gridE, gridS, gridColumns, gri
 // 26 numbers matching first occurences from column A to column Z
 var firstSquares = [{{ firstSquares }}];
 var lastSquares = [{{ lastSquares }}];
+var excluded = ['T15'];
 
 var wards, county;
 
@@ -113,7 +114,18 @@ function init(){
       /* add every square in the grid - even if not set to be visible */
       gridSquares[i].push({ wind: gridDataBase[i][j][0], flood: gridDataBase[i][j][1] });
       if((j >= firstSquares[i]-1) && (j<lastSquares[i])){
-        /* if this is the first or last in a column, add a column marker */
+        /* avoid special, excluded squares */
+        var excludeSquare = false;
+        for(var k=0; k<excluded.length; k++){
+          if(excluded[k] == squareName(i,j)){
+            excludeSquare = true;
+            break;
+          }
+        }
+        if(excludeSquare){
+          continue;
+        }
+        /* if this is the first or last in a column, add a column letter marker */
         //if((j == firstSquares[i] - 1) || (j == lastSquares[i] - 1)){
         if(j == firstSquares[i] - 1){
           var ctr = new L.LatLng(gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
@@ -121,6 +133,7 @@ function init(){
           var columnMark = new L.Marker(ctr, { icon: new baseIcon( "http://google-maps-icons.googlecode.com/files/blue" + ltr + ".png" ) });
           map.addLayer(columnMark);
         }
+        /* if this is the first empty column in a row, add a row number marker */
         else if(!rowMarked[j]){
           var ctr = new L.LatLng(gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
           var ltr = "" + j;
