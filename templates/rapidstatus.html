@@ -136,8 +136,8 @@ function init(){
         /* if this is the first empty column in a row, add a row number marker */
         else if(!rowMarked[j]){
           var ctr = new L.LatLng(gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
-          var ltr = "" + (j+1);
-          if(j < 10){
+          var ltr = j+1;
+          if(ltr < 10){
             ltr = "0" + ltr;
           }
           var rowMark = new L.Marker(ctr, { icon: new baseIcon( "http://google-maps-icons.googlecode.com/files/blue" + ltr + ".png" ) });
