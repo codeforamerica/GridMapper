@@ -184,6 +184,7 @@ function bindGrid(gridSquare, i, j){
     $("wind_level").value = gridSquares[i][j].wind;
     $("flood_level").disabled = false;
     $("flood_level").value = gridSquares[i][j].flood;
+    $("squareSelect").value = squareName(i,j);
 
     /* show popup in center of grid square */
     var popup = new L.Popup();
