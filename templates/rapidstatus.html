@@ -128,8 +128,8 @@ function init(){
 
         /* add squares to a dropdown */
         var sq = document.createElement("option");
-        option.value = i + "," + j;
-        option.value = squareName(i,j);
+        sq.value = i + "," + j;
+        sq.innerHTML = squareName(i,j);
         $("selectSquare").appendChild(sq);
 
         /* if this is the first or last in a column, add a column letter marker */
