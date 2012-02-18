@@ -94,13 +94,30 @@ function init(){
   gridRowHeight = (gridN - gridS) / gridRows;
   gridColumnWidth = (gridE - gridW) / gridColumns;
   gridSquares = [ ];
-    
+
+  /* set a base icon */
+  var baseIcon = L.Icon.extend({
+    iconUrl: 'http://google-maps-icons.googlecode.com/files/blueA.png',
+    shadowUrl: 'http://google-maps-icons.googlecode.com/files/shadow.png',
+    iconSize: new L.Point(30, 36),
+    shadowSize: new L.Point(42, 30),
+    iconAnchor: new L.Point(15, 18),
+    popupAnchor: new L.Point(0, -12)
+  });
+
   for(var i=0; i<gridColumns; i++){
     gridSquares.push( [ ] );
     for(var j=0; j<gridRows; j++){
       /* add every square in the grid - even if not set to be visible */
       gridSquares[i].push({ wind: gridDataBase[i][j][0], flood: gridDataBase[i][j][1] });
       if((j >= firstSquares[i]-1) && (j<lastSquares[i])){
+        /* if this is the first or last in a column, add a column marker */
+        if((j == firstSquares[i] - 1) || (j == lastSquares[i] - 1)){
+          var ctr = new L.LatLng(gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
+          var ltr = String.fromCharCode(65+i);
+          var columnMark = new L.Marker(ctr, { icon: new baseIcon( "http://google-maps-icons.googlecode.com/files/blue" + ltr + ".png" ) });
+          map.addLayer(columnMark);
+        }
         /* create and add a grid square */
         var corners = [
           new L.LatLng( gridN - j * gridRowHeight, gridW + i * gridColumnWidth ),
@@ -118,15 +135,6 @@ function init(){
     }
   }
 
-  /* set a base icon if you are adding points
-  var baseIcon = L.Icon.extend({
-    iconUrl: 'http://google-maps-icons.googlecode.com/files/hiking-tourism.png',
-    shadowUrl: 'http://google-maps-icons.googlecode.com/files/shadow.png',
-    iconSize: new L.Point(30, 36),
-    shadowSize: new L.Point(42, 30),
-    iconAnchor: new L.Point(15, 18),
-    popupAnchor: new L.Point(0, -12)
-  }); */
 }
 function bindGrid(gridSquare, i, j){
   gridSquare.on('click', function(e){
