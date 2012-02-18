@@ -178,6 +178,7 @@ function bindGrid(gridSquare, i, j){
 
     /* enable grid square data controls */
     activeGrid = [i, j];
+    console.log(i + "," + j);
     activeGridLayer = gridSquare;
     $("square_name").innerHTML = squareName(i,j);
     $("wind_level").disabled = false;
@@ -203,6 +204,7 @@ function activate(m){
     m.openPopup();
   });
 }
+/* dropdown makes it possible to select a grid */
 function setSquare(selector){
   if(activeMap == 'clear'){
     return;
