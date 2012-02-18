@@ -207,8 +207,9 @@ function setSquare(selector){
   if(activeMap == 'clear'){
     return;
   }
-  var i = selector.value.split(",")[0]
+  var i = selector.value.split(",")[0];
   var j = selector.value.split(",")[1];
+  gridSquare = gridSquares[i][j];
 
   /* enable grid square data controls */
   activeGrid = [i, j];
