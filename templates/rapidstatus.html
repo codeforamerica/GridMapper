@@ -372,7 +372,7 @@ function archiveMap(){
     for(var i=0; i<gridColumns; i++){
       for(var j=0; j<gridRows; j++){
         try{
-          gridSquares[i][j].layer.setStyle({ fillOpacity: 0.3, opacity: 0.6, fillColor: statusToColor[0] });
+          gridSquares[i][j].layer.setStyle({ fillOpacity: 0.6, fillColor: statusToColor[0] });
           gridSquares[i][j].wind = 0;
           gridSquares[i][j].flood = 0;
         }
@@ -471,9 +471,8 @@ span.label{
           <div class="clear"></div>
 
           <!-- Map user and layer info -->
-          <div id="explain" style="padding:10px;">
+          <div id="explain">
             <!-- <h3>Sample</h3> -->
-            <div style="padding:5px">
 
             <h2>Switch Map</h2>
             <!-- map layer selector -->
@@ -488,7 +487,7 @@ span.label{
             <br/>
             <span class="label label-info">Wards</span>
             <input id="wardLayer" type="checkbox" onclick="toggle(this)" checked="checked"/>
-            <br/>
+            <br/><br/>
             <a id="clearButton" class="btn" href="#" onclick="archiveMap()">Archive/Clear</a>
           </div>
 
