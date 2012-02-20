@@ -106,8 +106,6 @@ function init(){
     popupAnchor: new L.Point(0, -8)
   });
   
-  var rowMarked = new Array(gridRows);
-
   for(var i=0; i<gridColumns; i++){
     gridSquares.push( [ ] );
     for(var j=0; j<gridRows; j++){
@@ -132,25 +130,6 @@ function init(){
         sq.innerHTML = squareName(i,j);
         $("selectSquare").appendChild(sq);
 
-        /* if this is the first or last in a column, add a column letter marker */
-        //if((j == firstSquares[i] - 1) || (j == lastSquares[i] - 1)){
-        /* if(j == firstSquares[i] - 1){
-          var ctr = new L.LatLng(gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
-          var ltr = String.fromCharCode(65+i);
-          var columnMark = new L.Marker(ctr, { icon: new baseIcon( "http://google-maps-icons.googlecode.com/files/blue" + ltr + ".png" ) });
-          map.addLayer(columnMark);
-        } */
-        /* if this is the first empty column in a row, add a row number marker */
-        /* else if(!rowMarked[j]){
-          var ctr = new L.LatLng(gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
-          var ltr = j+1;
-          if(ltr < 10){
-            ltr = "0" + ltr;
-          }
-          var rowMark = new L.Marker(ctr, { icon: new baseIcon( "http://google-maps-icons.googlecode.com/files/blue" + ltr + ".png" ) });
-          map.addLayer(rowMark);
-          rowMarked[j] = true;
-        } */
         /* create and add a grid square */
         var corners = [
           new L.LatLng( gridN - j * gridRowHeight, gridW + i * gridColumnWidth ),
@@ -385,6 +364,26 @@ function toggle(chk){
   }
 }
 
+function archiveMap(){
+  var s = document.createElement('script');
+  s.type = "text/javascript";
+  s.src = "http://mapmeld.appspot.com/gridtest?action=create";
+  s.onload = function(){
+    for(var i=0; i<gridColumns; i++){
+      for(var j=0; j<gridRows; j++){
+        try{
+          gridSquares[i][j].layer.setStyle({ fillOpacity: 0.3, opacity: 0.6, fillColor: statusToColor[0] });
+          gridSquares[i][j].wind = 0;
+          gridSquares[i][j].flood = 0;
+        }
+        catch(e){
+        }
+      }
+    }
+  };
+  document.body.appendChild(s);
+}
+
 /* retrieve URL variables */
 function gup(nm){nm=nm.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");var rxS="[\\?&]"+nm+"=([^&#]*)";var rx=new RegExp(rxS);var rs=rx.exec(window.location.href);if(!rs){return null;}else{return rs[1];}}
 
@@ -489,6 +488,8 @@ span.label{
             <br/>
             <span class="label label-info">Wards</span>
             <input id="wardLayer" type="checkbox" onclick="toggle(this)" checked="checked"/>
+            <br/>
+            <a id="clearButton" class="btn" href="#" onclick="archiveMap()">Archive/Clear</a>
           </div>
 
           <!-- square data input section -->
