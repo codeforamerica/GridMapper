@@ -204,7 +204,7 @@ function bindGrid(gridSquare, i, j){
     map.addLayer(colMark);
     
     /* place the row marker */
-    ctr = new L.LatLng(gridN - (j+0.5) * gridRowHeight, gridW + (i-0.8) * gridColumnWidth);
+    ctr = new L.LatLng(gridN - (j+0.5) * gridRowHeight, gridW + (i-1.2) * gridColumnWidth);
     ltr = j+1;
     if(ltr < 10){
       ltr = "0" + ltr;
