@@ -37,7 +37,7 @@ var firstSquares = [{{ firstSquares }}];
 var lastSquares = [{{ lastSquares }}];
 var excluded = ['T15'];
 
-var wards, county;
+var wards, county, baseIcon, rowMark, colMark;
 
 function init(){
 
@@ -97,7 +97,7 @@ function init(){
   gridSquares = [ ];
 
   /* set a base icon */
-  var baseIcon = L.Icon.extend({
+  baseIcon = L.Icon.extend({
     iconUrl: 'http://google-maps-icons.googlecode.com/files/blueA.png',
     shadowUrl: 'http://google-maps-icons.googlecode.com/files/shadow.png',
     iconSize: new L.Point(20, 24),
@@ -134,14 +134,14 @@ function init(){
 
         /* if this is the first or last in a column, add a column letter marker */
         //if((j == firstSquares[i] - 1) || (j == lastSquares[i] - 1)){
-        if(j == firstSquares[i] - 1){
+        /* if(j == firstSquares[i] - 1){
           var ctr = new L.LatLng(gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
           var ltr = String.fromCharCode(65+i);
           var columnMark = new L.Marker(ctr, { icon: new baseIcon( "http://google-maps-icons.googlecode.com/files/blue" + ltr + ".png" ) });
           map.addLayer(columnMark);
-        }
+        } */
         /* if this is the first empty column in a row, add a row number marker */
-        else if(!rowMarked[j]){
+        /* else if(!rowMarked[j]){
           var ctr = new L.LatLng(gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
           var ltr = j+1;
           if(ltr < 10){
@@ -150,7 +150,7 @@ function init(){
           var rowMark = new L.Marker(ctr, { icon: new baseIcon( "http://google-maps-icons.googlecode.com/files/blue" + ltr + ".png" ) });
           map.addLayer(rowMark);
           rowMarked[j] = true;
-        }
+        } */
         /* create and add a grid square */
         var corners = [
           new L.LatLng( gridN - j * gridRowHeight, gridW + i * gridColumnWidth ),
@@ -192,6 +192,25 @@ function bindGrid(gridSquare, i, j){
     var gridCenter = new L.LatLng( gridN - (j+0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
     popup.setLatLng(gridCenter);
     map.openPopup(popup);
+  });
+  gridSquare.on('mouseover', function(e){
+    if(colMark){ map.removeLayer(colMark) }
+    if(rowMark){ map.removeLayer(rowMark) }
+
+    /* place the column marker */
+    var ctr = new L.LatLng(gridN - (j-0.5) * gridRowHeight, gridW + (i+0.5) * gridColumnWidth);
+    var ltr = String.fromCharCode(65+i);
+    colMark = new L.Marker(ctr, { icon: new baseIcon( "http://google-maps-icons.googlecode.com/files/blue" + ltr + ".png" ) });
+    map.addLayer(colMark);
+    
+    /* place the row marker */
+    ctr = new L.LatLng(gridN - (j+0.5) * gridRowHeight, gridW + (i-0.5) * gridColumnWidth);
+    ltr = j+1;
+    if(ltr < 10){
+      ltr = "0" + ltr;
+    }
+    rowMark = new L.Marker(ctr, { icon: new baseIcon( "http://google-maps-icons.googlecode.com/files/blue" + ltr + ".png" ) });
+    map.addLayer(rowMark);
   });
 }
 /* custom function to set your grid square's name */
