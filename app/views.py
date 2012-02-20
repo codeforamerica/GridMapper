@@ -59,7 +59,7 @@ def home():
     }
     return render_template('rapidstatus.html', **gridMapDetails)
 
-@views.route('/archive/<archiveid>')
+@views.route('/archive/<archiveID>')
 def archived(archiveID):
     """Render website's home page."""
     gridMapDetails = {
