@@ -231,9 +231,10 @@ function setSquare(selector){
 /* switch map over to show wind data values */
 function loadWindMap(){
   /* show current layer */
-  $("windButton").className = "btn disabled blueborder";
-  $("floodButton").className = "btn";
-  $("clearButton").className = "btn";
+  //$("windButton").className = "btn disabled blueborder";
+  //$("floodButton").className = "btn";
+  //$("clearButton").className = "btn";
+  $("layerLabel").innerHTML = "Wind Layer";
   activeMap = 'wind';
 
   /* set each grid square */
@@ -254,9 +255,10 @@ function loadWindMap(){
 }
 function loadFloodMap(){
   /* show current layer and set controls */
-  $("windButton").className = "btn";
-  $("floodButton").className = "btn disabled blueborder";
-  $("clearButton").className = "btn";
+  //$("windButton").className = "btn";
+  //$("floodButton").className = "btn disabled blueborder";
+  //$("clearButton").className = "btn";
+  $("layerLabel").innerHTML = "Flood Layer";
   activeMap = 'flood';
 
   /* set each grid square */
@@ -278,9 +280,10 @@ function loadFloodMap(){
 /* function hide squares, but does not remove them */
 function clearMap(){
   /* set layer status */
-  $("windButton").className = "btn";
-  $("floodButton").className = "btn";
-  $("clearButton").className = "btn disabled blueborder";
+  //$("windButton").className = "btn";
+  //$("floodButton").className = "btn";
+  //$("clearButton").className = "btn disabled blueborder";
+  $("layerLabel").innerHTML = "Grid Hidden";
   activeMap = 'clear';
 
   /* hide each square */
@@ -476,10 +479,28 @@ span.label{
 
             <h2>Switch Map</h2>
             <!-- map layer selector -->
-            <div class="btn-group">
+            <!-- <div class="btn-group">
               <a id="windButton" class="btn disabled blueborder" href="#" onclick="loadWindMap()">Wind</a>
               <a id="floodButton" class="btn" href="#" onclick="loadFloodMap()">Flood</a>
               <a id="clearButton" class="btn" href="#" onclick="clearMap()">Blank</a>
+            </div> -->
+            <div class="btn-group">
+              <a id="layerLabel" class="btn" href="#">Wind Grid</a>
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <!-- dropdown menu links -->
+                <li>
+                  <a id="windButton" href="#" onclick="loadWindMap()">Wind Layer</a>
+                </li>
+                <li>
+                  <a id="floodButton" href="#" onclick="loadFloodMap()">Flood Layer</a>
+                </li>
+                <li>
+                  <a id="clearButton" href="#" onclick="clearMap()">Hide Grid</a>
+                </li>
+              </ul>
             </div>
             <br/>
             <span class="label label-info">County</span>
