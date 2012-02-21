@@ -160,7 +160,7 @@ function bindGrid(gridSquare, i, j){
     /* enable grid square data controls */
     activeGrid = [i, j];
     activeGridLayer = gridSquare;
-    $("square_name").innerHTML = squareName(i,j);
+    //$("square_name").innerHTML = squareName(i,j);
     $("wind_level").disabled = false;
     $("wind_level").value = gridSquares[i][j].wind;
     $("flood_level").disabled = false;
@@ -217,7 +217,7 @@ function setSquare(selector){
   /* enable grid square data controls */
   activeGrid = [i, j];
   activeGridLayer = gridSquare;
-  $("square_name").innerHTML = squareName(i,j);
+  //$("square_name").innerHTML = squareName(i,j);
   $("wind_level").disabled = false;
   $("wind_level").value = gridSquares[i][j].wind;
   $("flood_level").disabled = false;
@@ -520,9 +520,8 @@ span.label{
             <p>
               <span class="label label-info">Name</span>
               <br/>
-              <span id="square_name">None Selected</span>
-              <br/>
               <select id="selectSquare" onchange="setSquare(this)">
+                <option value="none" selected="selected">None Selected</option>
               </select>
             </p>
             <p>
