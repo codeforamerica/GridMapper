@@ -44,7 +44,7 @@ var wards, county, baseIcon, rowMark, colMark;
 
 function init(){
   // hide modal archive check window
-  $("archiveCheck").modal({ });
+  $("#archiveCheck").modal({ });
 
   /* create a tile layer */
   var cloudmadeUrl = '{{ tilexyz }}';
@@ -57,7 +57,7 @@ function init(){
   map.setView(cityll, {{ zoom }}).addLayer(cloudmade);
 
   /* add GeoJSON of wards / county boundary */ 
-  $("wardLayer").checked = true;
+  $("#wardLayer").checked = true;
   var wardgeo = new L.GeoJSON();
   wards = [ ];
   wardgeo.on('featureparse', function(e){
@@ -67,7 +67,7 @@ function init(){
     e.layer.bindPopup( e.properties.Description );
   });
   
-  $("countyLayer").checked = true;
+  $("#countyLayer").checked = true;
   var countygeo = new L.GeoJSON();
   countygeo.on('featureparse', function(e){
     e.layer.setStyle({ fillOpacity: 0, opacity: 0.8, weight: 4, color: "#f00" });
@@ -133,7 +133,7 @@ function init(){
         var sq = document.createElement("option");
         sq.value = i + "," + j;
         sq.innerHTML = squareName(i,j);
-        $("selectSquare").appendChild(sq);
+        $("#selectSquare").appendChild(sq);
 
         /* create and add a grid square */
         var corners = [
@@ -164,11 +164,11 @@ function bindGrid(gridSquare, i, j){
     activeGrid = [i, j];
     activeGridLayer = gridSquare;
     //$("square_name").innerHTML = squareName(i,j);
-    $("wind_level").disabled = false;
-    $("wind_level").value = gridSquares[i][j].wind;
-    $("flood_level").disabled = false;
-    $("flood_level").value = gridSquares[i][j].flood;
-    $("selectSquare").value = i + "," + j;
+    $("#wind_level").disabled = false;
+    $("#wind_level").value = gridSquares[i][j].wind;
+    $("#flood_level").disabled = false;
+    $("#flood_level").value = gridSquares[i][j].flood;
+    $("#selectSquare").value = i + "," + j;
 
     /* show popup in center of grid square */
     var popup = new L.Popup();
@@ -221,10 +221,10 @@ function setSquare(selector){
   activeGrid = [i, j];
   activeGridLayer = gridSquare;
   //$("square_name").innerHTML = squareName(i,j);
-  $("wind_level").disabled = false;
-  $("wind_level").value = gridSquares[i][j].wind;
-  $("flood_level").disabled = false;
-  $("flood_level").value = gridSquares[i][j].flood;
+  $("#wind_level").disabled = false;
+  $("#wind_level").value = gridSquares[i][j].wind;
+  $("#flood_level").disabled = false;
+  $("#flood_level").value = gridSquares[i][j].flood;
 
   /* show popup in center of grid square */
   var popup = new L.Popup();
@@ -239,7 +239,7 @@ function loadWindMap(){
   //$("windButton").className = "btn disabled blueborder";
   //$("floodButton").className = "btn";
   //$("clearButton").className = "btn";
-  $("layerLabel").innerHTML = "Wind Layer";
+  $("#layerLabel").innerHTML = "Wind Layer";
   activeMap = 'wind';
 
   /* set each grid square */
@@ -263,7 +263,7 @@ function loadFloodMap(){
   //$("windButton").className = "btn";
   //$("floodButton").className = "btn disabled blueborder";
   //$("clearButton").className = "btn";
-  $("layerLabel").innerHTML = "Flood Layer";
+  $("#layerLabel").innerHTML = "Flood Layer";
   activeMap = 'flood';
 
   /* set each grid square */
@@ -288,7 +288,7 @@ function clearMap(){
   //$("windButton").className = "btn";
   //$("floodButton").className = "btn";
   //$("clearButton").className = "btn disabled blueborder";
-  $("layerLabel").innerHTML = "Grid Hidden";
+  $("#layerLabel").innerHTML = "Grid Hidden";
   activeMap = 'clear';
 
   /* hide each square */
@@ -374,8 +374,8 @@ function toggle(chk){
 
 function archiveMap(){
   // check with Bootstrap's modal window
-  $('archiveID').innerHTML = gridID;
-  $('archiveCheck').modal('show');
+  $('#archiveID').innerHTML = gridID;
+  $('#archiveCheck').modal('show');
 }
 function archiveMapConfirm(){
   var s = document.createElement('script');
@@ -399,11 +399,6 @@ function archiveMapConfirm(){
 
 /* retrieve URL variables */
 function gup(nm){nm=nm.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");var rxS="[\\?&]"+nm+"=([^&#]*)";var rx=new RegExp(rxS);var rs=rx.exec(window.location.href);if(!rs){return null;}else{return rs[1];}}
-
-/* helper function */
-function $(id){
-  return document.getElementById(id);
-}
     </script>
     <style type="text/css">
 html, body {
@@ -563,7 +558,7 @@ span.label{
         <div id="map"></div>
       </div><!-- /#map-container -->
       
-      <div id="archiveCheck" class="modal">
+      <div id="archiveCheck" class="modal" style="display:none;">
         <div class="modal-header">
           <a class="close" data-dismiss="modal">×</a>
           <h3>Confirm changes to map</h3>
@@ -573,7 +568,7 @@ span.label{
         </div>
         <div class="modal-footer">
           <a href="#" class="btn btn-primary" onclick="archiveMapConfirm()">Archive/Clear</a>
-          <a href="#" class="btn" onclick="$('archiveCheck').modal('hide')">No</a>
+          <a href="#" class="btn" onclick="$('#archiveCheck').modal('hide')">No</a>
         </div>
       </div>
     </body>
