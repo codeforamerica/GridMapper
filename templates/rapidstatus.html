@@ -374,10 +374,11 @@ function toggle(chk){
 
 function archiveMap(){
   // check with Bootstrap's modal window
-  $('#archiveID').innerHTML = gridID;
+  $('#archiveID')[0].innerHTML = gridID;
   $('#archiveCheck').modal('show');
 }
 function archiveMapConfirm(){
+  $('#archiveCheck').modal('hide');
   var s = document.createElement('script');
   s.type = "text/javascript";
   s.src = "http://mapmeld.appspot.com/gridtest?action=create";
