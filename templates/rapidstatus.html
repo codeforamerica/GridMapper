@@ -164,11 +164,11 @@ function bindGrid(gridSquare, i, j){
     activeGrid = [i, j];
     activeGridLayer = gridSquare;
     //$("square_name").innerHTML = squareName(i,j);
-    $("#wind_level").disabled = false;
-    $("#wind_level").value = gridSquares[i][j].wind;
-    $("#flood_level").disabled = false;
-    $("#flood_level").value = gridSquares[i][j].flood;
-    $("#selectSquare").value = i + "," + j;
+    $("#wind_level")[0].disabled = false;
+    $("#wind_level")[0].value = gridSquares[i][j].wind;
+    $("#flood_level")[0].disabled = false;
+    $("#flood_level")[0].value = gridSquares[i][j].flood;
+    $("#selectSquare")[0].value = i + "," + j;
 
     /* show popup in center of grid square */
     var popup = new L.Popup();
@@ -221,10 +221,10 @@ function setSquare(selector){
   activeGrid = [i, j];
   activeGridLayer = gridSquare;
   //$("square_name").innerHTML = squareName(i,j);
-  $("#wind_level").disabled = false;
-  $("#wind_level").value = gridSquares[i][j].wind;
-  $("#flood_level").disabled = false;
-  $("#flood_level").value = gridSquares[i][j].flood;
+  $("#wind_level")[0].disabled = false;
+  $("#wind_level")[0].value = gridSquares[i][j].wind;
+  $("#flood_level")[0].disabled = false;
+  $("#flood_level")[0].value = gridSquares[i][j].flood;
 
   /* show popup in center of grid square */
   var popup = new L.Popup();
