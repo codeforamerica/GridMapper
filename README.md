@@ -1,8 +1,13 @@
-Based on zachwill's project, Flask for Heroku
-Get that at https://github.com/zachwill/flask_heroku
+<b>GridMapper</b> draws a custom grid over a map. Changing the status of each grid square changes its color,
+allowing you to easily create and interpret a color-coded map grid.
 
-This displays an entirely client-side map, with a grid overlay
-You can use the controls in the left column to change colors of each square
-The map is created in Leaflet.js
+GeoJSON layers underneath the grid add context ( this example adds city limits and information on each ward ).
+The map also supports multiple grid layers ( this example separates wind and flood damage grids ).
 
-Go to app/views.py to customize the app for your area
+<img src="http://i.imgur.com/I0GC0.png"/>
+
+Browser support equivalent to Leaflet.js mapping tools (up-to-date Chrome, Firefox, IE7+)
+Change app/views.py to customize the app for your area
+
+Heroku server based on zachwill's project, Flask for Heroku
+https://github.com/zachwill/flask_heroku
