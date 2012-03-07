@@ -239,7 +239,7 @@ function loadWindMap(){
   //$("windButton").className = "btn disabled blueborder";
   //$("floodButton").className = "btn";
   //$("clearButton").className = "btn";
-  $("#layerLabel").innerHTML = "Wind Layer";
+  document.getElementById("layerLabel").innerHTML = "Wind Layer";
   activeMap = 'wind';
 
   /* set each grid square */
@@ -263,7 +263,7 @@ function loadFloodMap(){
   //$("windButton").className = "btn";
   //$("floodButton").className = "btn disabled blueborder";
   //$("clearButton").className = "btn";
-  $("#layerLabel").innerHTML = "Flood Layer";
+  document.getElementById("layerLabel").innerHTML = "Flood Layer";
   activeMap = 'flood';
 
   /* set each grid square */
@@ -288,7 +288,7 @@ function clearMap(){
   //$("windButton").className = "btn";
   //$("floodButton").className = "btn";
   //$("clearButton").className = "btn disabled blueborder";
-  $("#layerLabel").innerHTML = "Grid Hidden";
+  document.getElementById("layerLabel").innerHTML = "Grid Hidden";
   activeMap = 'clear';
 
   /* hide each square */
