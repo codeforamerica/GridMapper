@@ -59,6 +59,10 @@ def home():
     }
     return render_template('rapidstatus.html', **gridMapDetails)
 
+@views.route('/archives')
+def all_archives():
+    return redirect( "http://mapmeld.appspot.com/gridtest?action=archive" )
+
 @views.route('/archive/<archiveID>')
 def archived(archiveID):
     """Render website's home page."""
